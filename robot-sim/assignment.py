@@ -119,7 +119,7 @@ def explore():
 	function used to create a list of the codes of all the tokens inside the arena
 	"""
 	tokens_list=[]  #create the empty list of tokens' codes
-	drive(50,3)  #go straight forward in order to be at least inside the "circle" composed by the markers
+	drive(50,3)  #go straight forward in order to be more centered and see more tokens
 	token_t0_angles=[]  
 	token_t0_codes=[]
 	for token in R.see():	#in that configuration, record the angles and codes of the tokens in the robot's field of view
