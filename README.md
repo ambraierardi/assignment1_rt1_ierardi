@@ -73,26 +73,26 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
-assignment.py
+The assignment
 ================================
-The file `assignment.py` consists in a first section where the function used in the program are defined, and a second one where they are exploited, in order to fulfill the task given in the assignment, namely to take all the golden boxes together.
+The file **assignment.py** consists in a first section where the functions used in the program are defined, and a second one where they are exploited in order to fulfill the task given in the assignment, namely to *group all the golden boxes together*.
 
 Functions
 ----------------------
-The first function defined is the one named `drive`, which controls the robot to make him go straight with the desired speed, for the desired amount of time, in seconds.
+The first function defined is the one named `*drive*`, which controls the robot to make him go straight with the desired speed, for the desired amount of time, in seconds.
 
-The second function, `turn`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is made by setting to one wheel the velocity as it is, and to the other one the opposite value.
+The second function, `*turn*`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is done setting one wheel to the velocity as it is, and to the other one to the opposite value.
 
-The function `find_token` finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used in the `main` function to look for the tokens not yet moved.
+The function `*find_token*` finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used to look for the tokens not yet moved.
 
-The `find_new_token` function looks for the list of tokens given as input, and returns its distance and angle.
+The `*find_new_token*` function looks for the list of tokens given as input, and returns its distance and angle from the robot.
 
-The `reach_token` function manages to reach the closest token, ehich has a different code with respect to the ones in the input list. To do so, it exploits `find_token`. If the robot is not aligned with the token, it turn left or right, and then goes straight to reach it. When the robot is close enough to the target, namely it has a distance that is smaller that the threshold, 0.4, it grabs it with the method `R.grab()`.
+The `*reach_token*` function manages to reach the closest token, which has a different code with respect to the ones in the input list. To do so, it exploits *find_token*. If the robot is not aligned with the chosen token, it turn left or right, and then goes straight to reach it. When the robot is close enough to the target, namely it has a distance that is smaller that the threshold, equal to 0.4 meters, it grabs it with the method `R.grab()`.
 
-The `explore` function provides to create a list of all the tokens seen in the arena. This is useful to decide when to stop looking for tokens.
-First the robot drives straight, in order to get closer to the center of the arena. At this point it turns on itself once, and every time it sees a new token, it records it in a list, which will be returned at the end of the function.
+The `*explore*` function provides to create a list of all the tokens seen in the arena. This is useful to decide when to stop looking for tokens.
+First the robot drives straight, in order to get closer to the center of the arena. At this point it turns on itself once, and every time it sees a new token, it is recorded in a list, which will be returned at the end of the function.
 
-The last function, `reach_goal`, provides to bring the grabbed token to the goal position, that is given by the input list: it is a list of the codes corresponding to the moved tokens, which are now all in the goal position. The function exploits the previously defined `find_new_token` function to find the final position to reach.
+The last function, `*reach_goal*`, provides to bring the grabbed token to the goal position, that is given by the input list: it is a list of the codes corresponding to the moved tokens, which are now all in the goal position. The function exploits the previously defined `find_new_token` function to find the final position to reach.
 If the robot is not aligned to it, it turns, then it drives straight. When it reaches a distance smaller than 0.6, it releases it, with the `R.release()` method.
 The threshold distance in this case is greater than the one used for `reach_token` because we have to take into account the dimension of the grabbed token: if we take a value too small, once the robot reaches the target, it doesn't release it because it is still too distant, with respect to the threshold's value, so it keeps pushing the boxes in front of him, without releasing the one it is holding.
 
