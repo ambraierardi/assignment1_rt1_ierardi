@@ -81,7 +81,7 @@ Functions
 ----------------------
 The first function defined is the one named *`drive`*, which controls the robot to make him go straight with the desired speed, for the desired amount of time, in seconds.
 
-The second function, `*turn*`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is done setting one wheel to the velocity as it is, and to the other one to the opposite value.
+The second function, *`turn*`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is done setting one wheel to the velocity as it is, and to the other one to the opposite value.
 
 The function `*find_token*` finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used to look for the tokens not yet moved.
 
