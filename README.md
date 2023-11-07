@@ -77,7 +77,20 @@ Assignment.py
 ----------------------
 The file `assignment.py` consists in a first section where the function used in the program are defined, and a second one where they are exploited, in order to fulfill the task given in the assignment, namely to take all the golden boxes together.
 
-In order to do so,
+The first function defined is the one named `drive`, which controls the robot to make him go straight with the desired speed, for the desired amount of time, in seconds.
+
+The second function, `turn`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is made by setting to one wheel the velocity as it is, and to the other one the opposite value.
+
+The function `find_token` finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used in the `main` function to look for the tokens not yet moved.
+
+The `find_new_token` function looks for the list of tokens given as input, and returns its distance and angle.
+
+The `reach_token` function manages to reach the closest token, ehich has a different code with respect to the ones in the input list. To do so, it exploits `find_token`. If the robot is not aligned with the token, it turn left or right, and then goes straight to reach it. When the robot is close enough to the target, namely it has a distance that is smaller that the threshold, 0.4, it grabs it with the method `R.grab()`.
+
+The `explore` function provides to create a list of all the tokens seen in the arena. This is useful to decide when to stop looking for tokens.
+First the robot drives straight, in order to get closer to the center of the arena. At this point it turns on itself once, and every time it sees a new token, it records it in a list, which will be returned at the end of the function.
+
+The last function, `reach_goal`, provides to bring the grabbed token 
 
 
 
