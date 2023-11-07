@@ -73,7 +73,7 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
-Assignment.py
+assignment.py
 ================================
 The file `assignment.py` consists in a first section where the function used in the program are defined, and a second one where they are exploited, in order to fulfill the task given in the assignment, namely to take all the golden boxes together.
 
