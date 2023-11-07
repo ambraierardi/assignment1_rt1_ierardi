@@ -13,8 +13,10 @@ d_th = 0.4
 
 def drive(speed, seconds):
 
-#function to set the speed of the wheels of the robot, in order to drive it straight
-#arguments: the desired speed (equal for both wheels) and the time for which it has to go before stopping
+    """
+    function to set the speed of the wheels of the robot, in order to drive it straight;
+    arguments: the desired speed (equal for both wheels) and the time for which it has to go before stopping.
+    """
 
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = speed
@@ -23,9 +25,12 @@ def drive(speed, seconds):
     R.motors[0].m1.power = 0
 
 def turn(speed, seconds):
-
-#function to set the wheels' speed in order to turn
-#arguments: the desired speed of the wheel (one going forward and the other one backword, with equal and opposite speed) and the time for which it has to move before stopping
+	
+    """
+    function to set the wheels' speed in order to turn;
+    arguments: the desired speed of the wheel (one going forward and the other one backword, with equal and opposite speed) and the time for which it has to move before stopping.
+    """
+	
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = -speed
     time.sleep(seconds)
@@ -33,11 +38,14 @@ def turn(speed, seconds):
     R.motors[0].m1.power = 0
 
 def find_token(list_code):
+	
 	""" 
-	function to find the closest token that has a different code with respect to the list, given as input.
-	this function is useful in order to find the closest token, discarding the undesired ones, and returns its distance and angle with respect to the robot
-	if no token is detected, no distance is returned
+	function to find the closest token that has a different code with respect to the list, given as input;
+ 	argument: list of codes to discard;
+	this function is useful in order to find the closest token, discarding the undesired ones, and returns its distance and angle (orientation) with respect to the robot;
+	if no token is detected, no distance is returned.
 	"""
+	
     	dist=100
     	#high number set to the distance: if no token is close enough, i.e. under the threshold of 100, the distance is not recorded
     	for token in R.see():
@@ -53,7 +61,9 @@ def find_token(list_code):
  	
 def find_new_token(codice):
 	"""  
-	function to check if a token among the ones in the list "codice" is in the field of view of the robot. In this case, its distance and angle are returned
+	function to check if a token among the ones in the list "codice" is in the field of view of the robot;
+ 	in this case, its distance and angle are returned;
+  	argument: list of codes to look for.
 	"""
     	dist=100
 	for token in R.see():
@@ -69,7 +79,8 @@ def find_new_token(codice):
  	
 def reach_token(codice):
 	"""
-	function to reach the desired token, which has a code different from the ones in the list "codice", and to grab it once we're close enough to it
+	function to reach the desired token, which has a code different from the ones in the list "codice", and to grab it once we're close enough to it.
+ 	argument: list of codes to be discarded.
 	"""
 	var=1
 	while var:
@@ -79,13 +90,13 @@ def reach_token(codice):
     		if dist==-1:
         		print("No token in my field of view, I have to turn a little bit")
 			turn(+5,0.5)
-			#if no markers are detected, the robot must turn in order to find at least one
+			#if no markers are detected, the robot must turn in order to find one
     		elif dist<d_th: 
         		print("Token found")
         		R.grab() 
      		   	#if the robot is close to the token, it grabs it
         		print("Taken") 
-        		var=0 #at the end of this else if, the program exits the loop, since the robot found the marker
+        		var=0 #at the end of this condition, the program exits the loop, since the robot found the marker
         		list=[]
         		for i in  R.see():
         			list.append(i.centre.polar.length)  #the distances are recorded in the list called "list"
