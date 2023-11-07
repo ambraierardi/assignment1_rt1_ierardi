@@ -81,28 +81,28 @@ Functions
 ----------------------
 The first function defined is the one named *`drive`*, which controls the robot to make him go straight with the desired speed, for the desired amount of time, in seconds.
 
-The second function, *`turn*`, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is done setting one wheel to the velocity as it is, and to the other one to the opposite value.
+The second function, *`turn`*, sets the input speed to the wheel, in a way that the robot turns on itself, for the desired time interval. This is done setting one wheel to the velocity as it is, and to the other one to the opposite value.
 
-The function `*find_token*` finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used to look for the tokens not yet moved.
+The function *`find_token`* finds the closest token which has a different code with respect to the list given as input, and returns its distance and angle with respect to the robot. It is used to look for the tokens not yet moved.
 
-The `*find_new_token*` function looks for the list of tokens given as input, and returns its distance and angle from the robot.
+The *`find_new_token`* function looks for the list of tokens given as input, and returns its distance and angle from the robot.
 
-The `*reach_token*` function manages to reach the closest token, which has a different code with respect to the ones in the input list. To do so, it exploits *find_token*. If the robot is not aligned with the chosen token, it turn left or right, and then goes straight to reach it. When the robot is close enough to the target, namely it has a distance that is smaller that the threshold, equal to 0.4 meters, it grabs it with the method `R.grab()`.
+The *`reach_token`* function manages to reach the closest token, which has a different code with respect to the ones in the input list. To do so, it exploits *find_token*. If the robot is not aligned with the chosen token, it turn left or right, and then goes straight to reach it. When the robot is close enough to the target, namely it has a distance that is smaller that the threshold, equal to 0.4 meters, it grabs it with the method `R.grab()`.
 
-The `*explore*` function provides to create a list of all the tokens seen in the arena. This is useful to decide when to stop looking for tokens.
+The *`explore`* function provides to create a list of all the tokens seen in the arena. This is useful to decide when to stop looking for tokens.
 First the robot drives straight, in order to get closer to the center of the arena. At this point it turns on itself once, and every time it sees a new token, it is recorded in a list, which will be returned at the end of the function.
 
-The last function, `*reach_goal*`, provides to bring the grabbed token to the goal position, that is given by the input list: it is a list of the codes corresponding to the moved tokens, which are now all in the goal position. The function exploits the previously defined `find_new_token` function to find the final position to reach.
-If the robot is not aligned to it, it turns, then it drives straight. When it reaches a distance smaller than 0.6, it releases it, with the `R.release()` method.
-The threshold distance in this case is greater than the one used for `reach_token` because we have to take into account the dimension of the grabbed token: if we take a value too small, once the robot reaches the target, it doesn't release it because it is still too distant, with respect to the threshold's value, so it keeps pushing the boxes in front of him, without releasing the one it is holding.
+The last function, *`reach_goal`*, provides to bring the grabbed token to the goal position, that is given by the input list: it is a list of the codes corresponding to the moved tokens, which are now all in the goal position. The function exploits the previously defined *find_new_token* function to find the final position to reach.
+If the robot is not aligned to it, it turns, then it drives straight. When it reaches a distance smaller than 0.6 meters, it releases it, with the `R.release()` method.
+The threshold distance in this case is greater than the one used for *reach_token* because we have to take into account the dimension of the grabbed token: if we take a value too small, once the robot reaches the target, it doesn't release it because it is still too distant, with respect to the threshold's value, so it keeps pushing the boxes in front of him, without releasing the one it is holding.
 
 Main function
 ----------------------
-In the `main`, first the robot checks what is in its field of view: the **closest token** is chosen as **goal position**, the one where all the tokens will be grouped.
-Then, a list named *discard_list* is created: it will contain all the codes of the token which don't have to be moved. The code of the token set as reference position is put in the list, since it has to stay where it is.
-Then a list, called *lista*, with all the tokens' codes is created, calling the funtion `explore`. 
+In the *`main`* function, first the robot checks what it is in its field of view: the **closest token** is chosen as **goal position**, the one where all the tokens will be grouped.
+Then, a list named *discard_list* is created: it will contain all the codes of the tokens which should not be moved. The code of the token set as reference position is put in the list, since it has to stay where it is.
+Then a list, called *lista*, with all the tokens' codes is created, calling the funtion *explore*. 
 At this point, the robot starts moving the tokens.
-First, it checks if the length of the *lista* is equal to the length of *discard_list*: in this case the robot has to stop looking for tokens, since all of them hase been moved. Otherwise, it goes towards the closest token not yet moved, grabs it and brings it to the goal position.
+First, it checks if the length of the *lista* is equal to the length of *discard_list*: in this case the robot has to stop looking for tokens, since all of them have been moved. Otherwise, it goes towards the closest token not yet moved, it grabs it and brings it to the goal position.
 This loop is performed until all the tokens are grouped.
 
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
