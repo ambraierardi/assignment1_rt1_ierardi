@@ -107,7 +107,7 @@ def reach_token(codice):
     		elif -a_th<= rot_y <= a_th: #if the robot is well aligned with the token, and not enough close to it, it goes forward
         		print("Going straight")
         		drive(20, 0.5)
-    		elif rot_y < -a_th: #if the robot is not well aligned with the token, it moves on the left or on the right
+    		elif rot_y < -a_th: #if the robot is not well aligned with the token, it turns on the left or on the right
         		print("Turn left")
         		turn(-2, 0.5)
     		elif rot_y > a_th:
@@ -130,13 +130,15 @@ def explore():
 	var=True
 	while var:
 		turn(+2,0.5) #at this point, the goal is to make a complete circle on itself (of the robot) and record all the markers in the arena, 
-		#so we have to start by turning a little, and proceed like this up to when the the 360 deg rotation is approximately completed
+		#so we have to start by turning a little, and proceed like this up to when the the 360 deg rotation is approximately completed;
+		#no matters if it's a little bit less than 360, because the field of view in quite large, so, even if a token was
+		#in that last part of the circle, it would be seen by the robot.
 		for token in R.see():
 			if token.info.code not in tokens_list: 
-				tokens_list.append(token.info.code)	#if the token is not yet in the list, append its code to i
-		for token in R.see(): #now let's check if the robot made the whole rotation:
+				tokens_list.append(token.info.code)	#if the token's code is not yet in the list, append its code to it
+		for token in R.see(): #now let's check if the robot has made the whole rotation:
 			if token.info.code==code0 and ang0-1.5<=token.centre.polar.rot_y<=ang0-0.5:  #if in the robot's field of view is present the token with code taken as reference,
-			#check if its angle with respect to the robot is almost equal to the reference one: I chose a range of values right before the exact value of the complete rotation
+			#check if its angle with respect to the robot is almost equal to the reference one: I chose a range of values right before the exact value of the complete rotation.
 				var=False #at this point we exit the loop
 				return tokens_list #and return the list of the found tokens
 	
@@ -145,20 +147,21 @@ def reach_goal(codice):
 	"""
 	this function is useful to go towards the goal position, which is represented by the
 	position of the token with the chosen code, named "codice". It is okay even if it is a list, 
-	because this will be the list of all the moved tokens, which are all in the same spot, the goal one
+	because this will be the list of all the moved tokens, which are all in the same spot, the goal one.
 	"""
-	d_th=0.6 #threshold to release the token, in order to avoid to go on and push the tokens already grouped
+	d_th=0.6 #threshold to release the token, in order to avoid to go on and push the tokens already grouped, due to the dimension of the holden token
 	var=1
 	while var:
-    		dist, rot_y = find_new_token(codice)  #go and look for the tokens which are in the position of the list called "codice", in order to go there
+    		dist, rot_y = find_new_token(codice)  #look for the tokens which are in the position of the list called "codice", in order to go there
     		if dist==-1:
         		print("No token in my field of view, I have to turn a little bit")
 			turn(+5,0.5)  
 			#if no markers in the location of "codice" list are detected, the robot must turn in order to find at least one
     		elif dist<d_th: 
         		print("Token found")
-     		   	# if the robot is close to the token's list "codice", it releases it
+     		   	# if the robot is close enough to the token's list "codice", it releases it
         		drive(0,0.1) # the robot has to stop once it reached the goal position, in order to avoid pushing the group
+			#so we set a linear speed equal to 0
         		R.release()
         		print("Released")
         		var=0 #the program exits the loop
@@ -173,19 +176,19 @@ def reach_goal(codice):
         		print("Turn right")
         		turn(+2,0.5)
 def main():
-        list=[] #create an empty list to store there all the token's distances of the tokens in the robot's field of view
+        list=[] #create an empty list to store all the token's distances of the tokens in the robot's field of view
         for i in  R.see():
         	list.append(i.centre.polar.length) # fill the list previously created
 	minimum=min(list) #find minimum distance
 	ind_min=list.index(minimum) #find the corresponding index of that minimum distance
 	discard_list=[] #create a list of token's codes which have to be discarded for any reason:
-	#this could be either because that token has to stay where it it, because it is in the goal position
-	#or because it has already been moved, so once it is done, it has to stay where it is again
+	#this could be either because that token has to stay where it is, because it is in the goal position
+	#or because it has already been moved, so once it is done, it has to stay where it is.
 	discard_list.append(R.see()[ind_min].info.code) #pushing the goal position,
-	#which is the minimum distance token in the initial field of view of the robot, in the list of tokens to be left where they are
+	#which is the minimum distance token in the initial field of view of the robot, in the list of tokens to be left where they are.
 	print(discard_list) #let's check the token's code corresponing to the goal position
 	lista=[] #create an empty list, it will be stuffed with all the tokens found during the exploration
-	lista=explore()
+	lista=explore() #list of all the tokens in the arena
 	var=1
 	while var:
 		if len(discard_list)==len(lista): #as first thing, at each cycle, we check whether the number 
@@ -195,9 +198,9 @@ def main():
 			print("End of the program")
 			exit() #in this case, the program exits the loop
 		codice=reach_token(discard_list) #record the code of the token grabbed with this function
-		reach_goal(discard_list) #reach the goal position and release there the grabbed token
+		reach_goal(discard_list) #reach the goal position and release here the grabbed token
 		discard_list.append(codice) #push the code of the previously moved token inside the list of 
-		#tokens to be discarded
+		#tokens to be discarded.
 		print(discard_list)		
 		print(lista)
 	exit()		
