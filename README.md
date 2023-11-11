@@ -107,6 +107,6 @@ This loop is performed until all the tokens are grouped.
 
 Flowchart of the project
 ----------------------
-
+![Flowchart](flowchart_assignment1_ierardi.drawio.png)
 
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
