@@ -105,4 +105,8 @@ At this point, the robot starts moving the tokens.
 First, it checks if the length of the *lista* is equal to the length of *discard_list*: in this case the robot has to stop looking for tokens, since all of them have been moved. Otherwise, it goes towards the closest token not yet moved, it grabs it and brings it to the goal position.
 This loop is performed until all the tokens are grouped.
 
+Flowchart of the project
+----------------------
+
+
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
